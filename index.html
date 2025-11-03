@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Rent Predictor</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for the select box */
+        select::-webkit-scrollbar {
+            width: 8px;
+        }
+        select::-webkit-scrollbar-thumb {
+            background-color: #9ca3af; /* gray-400 */
+            border-radius: 4px;
+        }
+        /* Style for the disabled placeholder option */
+        select:invalid {
+            color: #9ca3af; /* gray-400 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-xl p-8 max-w-4xl w-full">
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">House Rent Predictor</h1>
+            <p class="text-gray-600 mt-2">Enter the details of the property to get a rent estimate.</p>
+        </div>
+
+        <!-- Prediction Form -->
+        <form id="rent-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Column 1 -->
+            <div class="space-y-4">
+                <div>
+                    <label for="size" class="block text-sm font-medium text-gray-700">Size (in sq ft)</label>
+                    <input type="number" id="size" name="size" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., 1100" required>
+                </div>
+
+                <div>
+                    <label for="bhk" class="block text-sm font-medium text-gray-700">BHK (Bedrooms)</label>
+                    <select id="bhk" name="bhk" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                        <option value="" selected disabled>Select BHK...</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="bathroom" class="block text-sm font-medium text-gray-700">Bathrooms</label>
+                    <select id="bathroom" name="bathroom" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                        <option value="" selected disabled>Select Bathrooms...</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="floor_num" class="block text-sm font-medium text-gray-700">Floor Number</label>
+                    <input type="number" id="floor_num" name="floor_num" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., 3 (Use 0 for Ground)" required>
+                </div>
+
+                <div>
+                    <label for="total_floors" class="block text-sm font-medium text-gray-700">Total Floors in Building</label>
+                    <input type="number" id="total_floors" name="total_floors" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="e.g., 5" required>
+                </div>
+            </div>
+
+            <!-- Column 2 -->
+            <div class="space-y-4">
+                <div>
+                    <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+                    <select id="city" name="city" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                        <option value="" selected disabled>Select a City...</option>
+                        <option value="Kolkata">Kolkata</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Chennai">Chennai</option>
+                        <option value="Hyderabad">Hyderabad</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="area-locality" class="block text-sm font-medium text-gray-700">Area Locality (Top 50)</label>
+                    <!-- This select box is now initially empty. JS will populate it. -->
+                    <select id="area-locality" name="area-locality" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" size="5" required>
+                        <option value="" selected disabled>Select a City first...</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="area-type" class="block text-sm font-medium text-gray-700">Area Type</label>
+                    <select id="area-type" name="area-type" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                        <option value="" selected disabled>Select Area Type...</option>
+                        <option>Super Area</option>
+                        <option>Carpet Area</option>
+                        <option>Built Area</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="furnishing" class="block text-sm font-medium text-gray-700">Furnishing Status</label>
+                    <select id="furnishing" name="furnishing" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                        <option value="" selected disabled>Select Furnishing...</option>
+                        <option>Unfurnished</option>
+                        <option>Semi-Furnished</option>
+                        <option>Furnished</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="tenant" class="block text-sm font-medium text-gray-700">Tenant Preferred</label>
+                    <select id="tenant" name="tenant" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                        <option value="" selected disabled>Select Tenant Type...</option>
+                        <option>Bachelors/Family</option>
+                        <option>Bachelors</option>
+                        <option>Family</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="md:col-span-2 text-center mt-6">
+                <button type="submit" id="predict-button" class="w-full md:w-1/2 bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200">
+                    Predict Rent
+                </button>
+            </div>
+        </form>
+
+        <!-- Prediction Result -->
+        <div id="result-container" class="mt-8 text-center hidden">
+            <p class="text-gray-600 text-lg">Estimated Monthly Rent:</p>
+            <p id="result-price" class="text-5xl font-bold text-gray-900 my-2">₹0</p>
+        </div>
+        
+        <!-- Error Message -->
+        <div id="error-container" class="mt-6 text-center hidden">
+            <p id="error-message" class="text-red-600 font-semibold"></p>
+        </div>
+
+    </div>
+
+    <script>
+        const rentForm = document.getElementById('rent-form');
+        const citySelect = document.getElementById('city');
+        const localitySelect = document.getElementById('area-locality');
+        
+        const resultContainer = document.getElementById('result-container');
+        const resultPrice = document.getElementById('result-price');
+        const errorContainer = document.getElementById('error-container');
+        const errorMessage = document.getElementById('error-message');
+        const predictButton = document.getElementById('predict-button');
+
+        // --- NEW: This object maps cities to their Top 50 localities ---
+        // This is based on the analysis of your dataset.
+        const cityLocalityMap = {
+            "Kolkata": ["Other", "Salt Lake City Sector 2", "Salt Lake City Sector 1", "Behala", "Salt Lake City Sector 5", "Kasba"],
+            "Mumbai": ["Other", "Bandra West", "Chembur", "Andheri West", "Khar West", "Goregaon West"],
+            "Bangalore": ["Other", "Electronic City", "K R Puram", "Mahadevapura", "Vijayanagar", "whitefield", "Ramamurthy Nagar", "Hebbal", "Electronic City Phase 2, Electronic City", "Jp Nagar Phase 7, J P Nagar", "Murugeshpalya, Airport Road"],
+            "Delhi": ["Other", "Laxmi Nagar", "kst chattarpur Apartments", "Chhattarpur", "Saket"],
+            "Chennai": ["Other", "Velachery", "Madipakkam", "Medavakkam", "Iyyappanthangal", "Sholinganallur", "Vadapalani", "Chromepet, GST Road", "Perungalathur, Chennai Bypass Road", "Ambattur", "Porur", "Kolathur", "Valasaravakkam, Arcot Road", "Choolaimedu", "Old Mahabalipuram Road"],
+            "Hyderabad": ["Other", "Gachibowli", "Miyapur, NH 9", "Kondapur", "Banjara Hills, NH 9", "Manikonda, Outer Ring Road", "Attapur", "Kukatpally, NH 9", "Sainikpuri", "Uppal, NH 2 2", "Bandlaguda Jagir", "Boduppal, NH 2 2", "Madhapur"]
+        };
+
+        // --- NEW: Event listener to update localities when city changes ---
+        citySelect.addEventListener('change', function() {
+            const selectedCity = citySelect.value;
+            const localities = cityLocalityMap[selectedCity] || ['Other'];
+            
+            // Clear current options
+            localitySelect.innerHTML = '';
+            
+            // Add new options
+            localities.forEach(locality => {
+                const option = document.createElement('option');
+                option.value = locality;
+                option.textContent = locality;
+                localitySelect.appendChild(option);
+            });
+            
+            // Set "Other" as the default selection
+            localitySelect.value = "Other";
+        });
+
+
+        rentForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            // Show loading state on button
+            predictButton.disabled = true;
+            predictButton.textContent = "Predicting...";
+            errorContainer.classList.add('hidden');
+            resultContainer.classList.add('hidden');
+
+            // --- 1. Get all inputs from the form ---
+            const floorNum = parseInt(document.getElementById('floor_num').value);
+            const totalFloors = parseInt(document.getElementById('total_floors').value);
+
+            // Simple validation
+            if (isNaN(floorNum) || isNaN(totalFloors)) {
+                let errorMsg = "Please enter valid numbers for Floor and Total Floors.";
+                if (isNaN(floorNum)) {
+                     errorMsg = "Please enter a valid Floor Number (e.g., 0 for Ground).";
+                } else if (isNaN(totalFloors)) {
+                     errorMsg = "Please enter a valid number for Total Floors.";
+                }
+                
+                errorMessage.textContent = errorMsg;
+                errorContainer.classList.remove('hidden');
+                predictButton.disabled = false;
+                predictButton.textContent = "Predict Rent";
+                return;
+            }
+
+            // Construct the data payload for the API
+            const data = {
+                'Size': parseFloat(document.getElementById('size').value) || 0,
+                'BHK': parseInt(document.getElementById('bhk').value), 
+                'Bathroom': parseInt(document.getElementById('bathroom').value),
+                'Floor_Num': floorNum,
+                'Total_Floors': totalFloors,
+                'City': document.getElementById('city').value,
+                'Area_Locality_Simple': document.getElementById('area-locality').value,
+                'Area Type': document.getElementById('area-type').value,
+                'Furnishing Status': document.getElementById('furnishing').value,
+                'Tenant Preferred': document.getElementById('tenant').value
+            };
+            
+            // --- 2. Call the Flask API ---
+            try {
+                // The URL points to your locally running Flask server
+                const response = await fetch('http://127.0.0.1:5000/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    // Handle server-side errors (like a column mismatch)
+                    throw new Error(result.error || `HTTP error! status: ${response.status}`);
+                }
+
+                // --- 3. Post-process and Display ---
+                const formattedRent = new Intl.NumberFormat('en-IN', {
+                    style: 'currency',
+                    currency: 'INR',
+                    maximumFractionDigits: 0
+                }).format(result.predicted_rent);
+
+                resultPrice.textContent = formattedRent;
+                resultContainer.classList.remove('hidden');
+
+            } catch (error) {
+                // Handle network errors or if the server is not running
+                console.error("Error during prediction:", error);
+                errorMessage.textContent = "Could not connect to the prediction server. Please make sure the 'app.py' server is running in your terminal.";
+                errorContainer.classList.remove('hidden');
+            } finally {
+                // Reset button
+                predictButton.disabled = false;
+                predictButton.textContent = "Predict Rent";
+            }
+        });
+
+    </script>
+</body>
+</html>
+
