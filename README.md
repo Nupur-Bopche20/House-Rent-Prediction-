@@ -44,3 +44,37 @@ The project consists of two parts:
 ```bash
 git clone [https://github.com/Nupur-Bopche20/House-Rent-Prediction-.git](https://github.com/Nupur-Bopche20/House-Rent-Prediction-.git)
 cd House-Rent-Prediction-
+
+2️⃣ Create a Virtual Environment (Recommended)
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+3️⃣ Install Dependencies
+pip install -r requirements.txt
+
+4️⃣ Train and Save the Model
+
+(Make sure House_Rent_Dataset.csv is in the project folder)
+
+python save_model.py
+
+5️⃣ Start the Flask Server
+
+Runs at http://127.0.0.1:5000
+
+python app.py
+
+
+🔔 Keep this terminal running!
+
+6️⃣ Launch the Web App
+
+Open index.html in your browser, fill out the form, and get live predictions 🚀
+
+🤝 Contributing
+
+Feel free to fork this project, open issues, or submit pull requests!
+
+📄 License
+
+MIT License © 2025 Nupur Bopche
