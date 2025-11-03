@@ -1,4 +1,4 @@
-# House Rent Prediction Web App
+# House Rent Prediction Website
 
 This is a full-stack machine learning project that predicts house rent prices in major Indian cities based on user-provided features.
 
